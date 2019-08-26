@@ -1,0 +1,33 @@
+[package]
+name = "vl6180x"
+version = "0.1.0"
+authors = ["Andrey Zgarbul <zgarbul.andrey@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[dependencies.embedded-hal]
+version = "0.2.3"
+features = ["unproven"]
+
+[features]
+default = ["upscale_support_m1"]
+#, "als_support", "have_dmax_ranging", "wrap_around_filter_support"]
+have_als_data = []
+als_support = ["have_als_data"]
+cached_reg = []
+refresh_cached_data_after_init = []
+have_rate_data = []
+have_multi_read = []
+have_wrap_around_data = []
+wrap_around_filter_support = ["have_rate_data", "have_wrap_around_data"]
+have_dmax_ranging = ["have_rate_data"]
+extended_range = []
+have_upscale_data = []
+upscale_support_1 = []
+upscale_support_2 = []
+upscale_support_3 = []
+upscale_support_m1 = ["have_upscale_data"]
+upscale_support_m2 = ["have_upscale_data"]
+upscale_support_m3 = ["have_upscale_data"]
+safe_polling_enter = []

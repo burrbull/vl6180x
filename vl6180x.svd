@@ -1,0 +1,1147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd" >
+    <vendor>STMicroelectronics</vendor>
+    <name>VL6180</name>
+    <version>1.0</version>
+    <description>Proximity and ambient light sensing (ALS) module</description>
+
+    <addressUnitBits>8</addressUnitBits>
+    <width>16</width>
+    <size>8</size>
+    <access>read-write</access>
+
+    <!-- TODO: remove this -->
+    <resetValue>0x00000000</resetValue>
+    <resetMask>0xFFFFFFFF</resetMask>
+
+    <peripherals>
+        <peripheral>
+            <name>ALL</name>
+            <description>Main Peripheral</description>
+            <baseAddress>0x0</baseAddress>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<i2cdevice schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd" >
+    <vendor>STMicroelectronics</vendor>
+    <name>VL6180</name>
+    <version>1.0</version>
+    <description>Proximity and ambient light sensing (ALS) module</description>-->
+    <registers>
+
+        <!-- IDENTIFICATION -->
+        <register>
+            <name>identification_model_id</name>
+            <description>Device model identification number. 0xB4 = VL6180X</description>
+            <addressOffset>0x000</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0xB4</resetValue>
+        </register>
+        <register>
+            <name>identification_model_rev_major</name>
+            <description>Revision identifier of the Device for major change</description>
+            <addressOffset>0x001</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_model_rev_minor</name>
+            <description>Revision identifier of the Device for minor change. IDENTIFICATION_MODEL_REV_MINOR = 3 for latest ROM revision</description>
+            <addressOffset>0x002</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x3</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_module_rev_major</name>
+            <description>Revision identifier of the Module Package for major change. Used to store NVM content version. Contact ST for current information</description>
+            <addressOffset>0x003</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_module_rev_minor</name>
+            <description>Revision identifier of the Module Package for minor change. Used to store NVM content version. Contact ST for current information</description>
+            <addressOffset>0x004</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x2</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_date_hi</name>
+            <description>Part of the register set that can be used to uniquely identify a module</description>
+            <addressOffset>0x006</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <fields>
+                <field>
+                    <name>month</name>
+                    <description>Manufacturing month</description>
+                    <bitRange>[3:0]</bitRange>
+                </field>
+                <field>
+                    <name>year</name>
+                    <description>Last digit of manufacturing year</description>
+                    <bitRange>[7:4]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_date_lo</name>
+            <description>Part of the register set that can be used to uniquely identify a module</description>
+            <addressOffset>0x007</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <fields>
+                <field>
+                    <name>phase</name>
+                    <description>Manufacturing phase identification</description>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+                <field>
+                    <name>day</name>
+                    <description>Manufacturing day</description>
+                    <bitRange>[7:3]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>identification_time</name>
+            <description>Time since midnight (in seconds) = register_value * 2</description>
+            <addressOffset>0x008</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[2:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+
+        <!-- SYSTEM -->
+        <register>
+            <name>system_mode_gpio0</name>
+            <description>Configures polarity and select which function gpio 0 serves</description>
+            <addressOffset>0x010</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x60</resetValue>
+            <fields>
+                <field>
+                    <name>select</name>
+                    <description>Functional configuration options</description>
+                    <bitRange>[4:1]</bitRange>
+                    <enumeratedValues>
+                        <name>SELECT</name>
+                        <enumeratedValue>
+                            <name>off</name>
+                            <description>Hi-Z</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>interrupt_output</name>
+                            <description>GPIO Interrupt output</description>
+                            <value>8</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>polarity</name>
+                    <description>Signal Polarity Selection</description>
+                    <bitRange>[5:5]</bitRange>
+                    <enumeratedValues>
+                        <name>POLARITY</name>
+                        <enumeratedValue>
+                            <name>low</name>
+                            <description>Active-low</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>high</name>
+                            <description>Active-high</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>is_xshutdown</name>
+                    <description>Priority mode - when enabled, other bits of the register are ignored. GPIO0 is main XSHUTDOWN input.</description>
+                    <bitRange>[6:6]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>disabled</name>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>enabled</name>
+                            <description>GPIO0 is main XSHUTDOWN input</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_mode_gpio1</name>
+            <description>Configures polarity and select which function gpio 0 serves</description>
+            <addressOffset>0x011</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x20</resetValue>
+            <fields>
+                <field>
+                    <name>select</name>
+                    <description>Functional configuration options</description>
+                    <bitRange>[4:1]</bitRange>
+                    <enumeratedValues derivedFrom="system_mode_gpio0.select.SELECT" />
+                </field>
+                <field>
+                    <name>polarity</name>
+                    <description>Signal Polarity Selection</description>
+                    <bitRange>[5:5]</bitRange>
+                    <enumeratedValues derivedFrom="system_mode_gpio0.polarity.POLARITY" />
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_history_ctrl</name>
+            <description>SYSTEM_HISTORY_CTRL</description>
+            <addressOffset>0x012</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>buffer_enable</name>
+                    <description>Enable History buffering</description>
+                    <bitRange>[0:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>disabled</name>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>enabled</name>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>buffer_mode</name>
+                    <description>Select mode buffer results for:</description>
+                    <bitRange>[1:1]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>ranging</name>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>als</name>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>buffer_clear</name>
+                    <description>User-command to clear history (FW will auto-clear this bit when clear has completed)</description>
+                    <bitRange>[2:2]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>disabled</name>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>clear_all</name>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_interrupt_config_gpio</name>
+            <description>SYSTEM_INTERRUPT_CONFIG_GPIO</description>
+            <addressOffset>0x014</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>range_int_mode</name>
+                    <description>Interrupt mode source for Range readings</description>
+                    <bitRange>[2:0]</bitRange>
+                    <enumeratedValues>
+                        <name>INTMODE</name>
+                        <enumeratedValue>
+                            <name>disabled</name>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_low</name>
+                            <description>value less then thresh_low</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_high</name>
+                            <description>value more then thresh_high</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>out_of_window</name>
+                            <description>value less then thresh_low OR value more then thresh_high</description>
+                            <value>3</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>new_sample_ready</name>
+                            <value>4</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>als_int_mode</name>
+                    <description>Interrupt mode source for ALS readings</description>
+                    <bitRange>[5:3]</bitRange>
+                    <enumeratedValues derivedFrom="range_int_mode.INTMODE">
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_interrupt_clear</name>
+            <description>SYSTEM_INTERRUPT_CLEAR</description>
+            <addressOffset>0x015</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>range</name>
+                    <description>Clear Range Int</description>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+                <field>
+                    <name>als</name>
+                    <description>Clear ALS Int</description>
+                    <bitRange>[1:1]</bitRange>
+                </field>
+                <field>
+                    <name>error</name>
+                    <description>Clear Error Int</description>
+                    <bitRange>[2:2]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_fresh_out_of_reset</name>
+            <description>Fresh out of reset bit, default of 1, user can set this to 0 after initial boot and can therefore use this to check for a reset condition</description>
+            <addressOffset>0x016</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <description>Fresh out of reset bit</description>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>system_grouped_parameter_hold</name>
+            <description>Flag set over I2C to indicate that data is being updated</description>
+            <addressOffset>0x017</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <description>GROUPED_PARAMETER_HOLD</description>
+                    <bitRange>[0:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>stable</name>
+                            <description>Data is stable - FW is safe to copy</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>updated</name>
+                            <description>Data being updated - FW not safe to copy</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+
+        <!-- SYSRANGE -->
+        <register>
+            <name>sysrange_start</name>
+            <description>SYSRANGE_START</description>
+            <addressOffset>0x018</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>startstop</name>
+                    <description>StartStop trigger based on current mode and system configuration of device_ready. FW clears register automatically. This bit is auto-cleared in both modes of operation.</description>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+                <field>
+                    <name>mode</name>
+                    <description>Device Mode select</description>
+                    <bitRange>[1:1]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>single_shot</name>
+                            <description>Ranging Mode Single-Shot</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>continuous</name>
+                            <description>Ranging Mode Continuous</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysrange_thresh_high</name>
+            <description>High Threshold value for ranging comparison. Range 0-255mm</description>
+            <addressOffset>0x019</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0xff</resetValue>
+        </register>
+        <register>
+            <name>sysrange_thresh_low</name>
+            <description>Low Threshold value for ranging comparison. Range 0-255mm</description>
+            <addressOffset>0x01a</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>sysrange_intermeasurement_period</name>
+            <description>Time delay between measurements in Ranging continuous mode. Range 0-254 (0 = 10ms). Step size = 10ms</description>
+            <addressOffset>0x01b</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0xff</resetValue>
+        </register>
+        <register>
+            <name>sysrange_max_convergence_time</name>
+            <description>Maximum time to run measurement in Ranging modes. 1 code = 1 ms. Measurement aborted when limit reached to aid power reduction</description>
+            <addressOffset>0x01c</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x31</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[5:0]</bitRange>
+                    <writeConstraint><range><minimum>1</minimum><maximum>63</maximum></range></writeConstraint>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysrange_crosstalk_compensation_rate</name>
+            <description>User-controlled crosstalk compensation in Mcps (9.7 format)</description>
+            <addressOffset>0x01e</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>sysrange_crosstalk_valid_height</name>
+            <description>Minimum range value in mm to qualify for cross-talk compensation</description>
+            <addressOffset>0x021</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x14</resetValue>
+        </register>
+        <register>
+            <name>sysrange_early_convergence_estimate</name>
+            <description>FW carries out an estimate of convergence rate 0.5ms into each new range measurement. If convergence rate is below user input value, the operation aborts to save power</description>
+            <addressOffset>0x022</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>sysrange_part_to_part_range_offset</name>
+            <description>2s complement format</description>
+            <addressOffset>0x024</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+        </register>
+        <register>
+            <name>sysrange_range_ignore_valid_height</name>
+            <description>Range below which ignore threshold is applied. Aim is to ignore the cover glass i.e. low signal rate at near distance. Should not be applied to low reflectance target at far distance. Range in mm</description>
+            <addressOffset>0x025</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x10</resetValue>
+        </register>
+        <register>
+            <name>sysrange_range_ignore_threshold</name>
+            <description>User configurable min threshold signal return rate. Used to filter out ranging due to cover glass when there is no target above the device. Mcps 9.7 format</description>
+            <addressOffset>0x026</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>sysrange_max_ambient_level_mult</name>
+            <description>User input value to multiply return_signal_count for AMB:signal ratio check. If (amb counts * 6) > return_signal_count * mult then abandon measurement due to high ambient (4.4 format)</description>
+            <addressOffset>0x02c</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0xA0</resetValue>
+        </register>
+        <register>
+            <name>sysrange_range_check_enables</name>
+            <description>SYSRANGE_RANGE_CHECK_ENABLES</description>
+            <addressOffset>0x02d</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x11</resetValue>
+            <fields>
+                <field>
+                    <name>signal_to_noise</name>
+                    <bitRange>[4:4]</bitRange>
+                </field>
+                <field>
+                    <name>range_ignore</name>
+                    <bitRange>[1:1]</bitRange>
+                </field>
+                <field>
+                    <name>early_convergence</name>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysrange_vhv_recalibrate</name>
+            <description>SYSRANGE_VHV_RECALIBRATE</description>
+            <addressOffset>0x02e</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>vhv_status</name>
+                    <description>FW controlled status bit showing when FW has completed auto-vhv process</description>
+                    <bitRange>[1:1]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>finished</name>
+                            <description>FW has finished autoVHV operation</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>operation</name>
+                            <description>During autoVHV operation</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>vhv_recalibrate</name>
+                    <description>User-Controlled enable bit to force FW to carry out recalibration of the VHV setting for sensor array. FW clears bit after operation carried out</description>
+                    <bitRange>[0:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>start</name>
+                            <description>Manual trigger for VHV recalibration. Can only be called when ALS and ranging are in STOP mode</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysrange_vhv_repeate_rate</name>
+            <description>User entered repeat rate of auto VHV task (0 = off, 255 = after every 255 measurements)</description>
+            <addressOffset>0x031</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x00</resetValue>
+        </register>
+
+        <!-- SYSALS -->
+        <register>
+            <name>sysals_start</name>
+            <description>SYSALS_START</description>
+            <addressOffset>0x038</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>mode</name>
+                    <description>Device Mode select</description>
+                    <bitRange>[1:1]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>single_shot</name>
+                            <description>ALS Mode Single-Shot</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>continious</name>
+                            <description>ALS Mode Continuous</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>startstop</name>
+                    <description>Start/Stop trigger based on current mode and system configuration of device_ready. FW clears register automatically</description>
+                    <bitRange>[0:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>enable</name>
+                            <description>In single-shot mode starts a single measurement. In continuous mode will either start continuous operation (if stopped) or halt continuous operation (if started)</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysals_thresh_high</name>
+            <description>High Threshold value for ALS comparison. Range 0-65535 codes</description>
+            <addressOffset>0x03a</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <resetValue>0xffff</resetValue>
+        </register>
+        <register>
+            <name>sysals_thresh_low</name>
+            <description>Low Threshold value for ALS comparison. Range 0-65535 codes</description>
+            <addressOffset>0x03c</addressOffset>
+            <size>16</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>sysals_intermeasurement_period</name>
+            <description>Time delay between measurements in ALS continuous mode. Range 0-254 (0 = 10ms). Step size = 10ms</description>
+            <addressOffset>0x03e</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0xff</resetValue>
+        </register>
+        <register>
+            <name>sysals_analogue_gain</name>
+            <description>SYSALS_ANALOGUE_GAIN</description>
+            <addressOffset>0x03f</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x06</resetValue>
+            <fields>
+                <field>
+                    <name>light</name>
+                    <description>ALS analogue gain (light channel)</description>
+                    <bitRange>[2:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>gain20</name>
+                            <description>ALS Gain = 20</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain10</name>
+                            <description>ALS Gain = 10</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain5</name>
+                            <description>ALS Gain = 5.0</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain2_5</name>
+                            <description>ALS Gain = 2.5</description>
+                            <value>3</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain1_67</name>
+                            <description>ALS Gain = 1.67</description>
+                            <value>4</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain1_25</name>
+                            <description>ALS Gain = 1.25</description>
+                            <value>5</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain1</name>
+                            <description>ALS Gain = 1.0</description>
+                            <value>6</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>gain40</name>
+                            <description>ALS Gain = 40</description>
+                            <value>7</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>sysals_integration_period</name>
+            <description>Integration period for ALS mode. 1 code = 1 ms (0 = 1 ms). Recommended setting is 100 ms (0x63)</description>
+            <addressOffset>0x040</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[7:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+
+        <!-- READOUT -->
+        <register>
+            <name>result_range_status</name>
+            <description>RESULT_RANGE_STATUS</description>
+            <addressOffset>0x04d</addressOffset>
+            <size>8</size>
+            <access>read-only</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>error_code</name>
+                    <description>Specific error codes</description>
+                    <bitRange>[7:4]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>no</name>
+                            <description>No error</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>vcsel_continuity_test</name>
+                            <description>VCSEL Continuity Test</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>vcsel_watchdog_test</name>
+                            <description>VCSEL Watchdog Test</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>vcsel_watchdog</name>
+                            <description>VCSEL Watchdog</description>
+                            <value>3</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>pll1_lock</name>
+                            <description>PLL1 Lock</description>
+                            <value>4</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>pll2_lock</name>
+                            <description>PLL2 Lock</description>
+                            <value>5</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>early_convergence_estimate</name>
+                            <description>Early Convergence Estimate</description>
+                            <value>6</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>max_convergence</name>
+                            <description>Max Convergence</description>
+                            <value>7</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>no_target_ignore</name>
+                            <description>No Target Ignore</description>
+                            <value>8</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>max_snr</name>
+                            <description>Max Signal To Noise Ratio</description>
+                            <value>11</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>raw_ranging_algo_underflow</name>
+                            <description>Raw Ranging Algo Underflow</description>
+                            <value>12</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>raw_ranging_algo_overflow</name>
+                            <description>Raw Ranging Algo Overflow</description>
+                            <value>13</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>ranging_algo_underflow</name>
+                            <description>Ranging Algo Underflow</description>
+                            <value>14</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>ranging_algo_overflow</name>
+                            <description>Ranging Algo Overflow</description>
+                            <value>15</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>device_ready</name>
+                    <description>Device Ready. When set to 1, indicates the device mode and configuration can be changed and a new start command will be accepted. When 0, indicates the device is busy</description>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>result_als_status</name>
+            <description>RESULT_ALS_STATUS</description>
+            <addressOffset>0x04e</addressOffset>
+            <size>8</size>
+            <access>read-only</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>error_code</name>
+                    <description>Specific error and debug codes</description>
+                    <bitRange>[7:4]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>no</name>
+                            <description>No error</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>overflow</name>
+                            <description>Overflow error</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>underflow</name>
+                            <description>Underflow error</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>device_ready</name>
+                    <description>Device Ready. When set to 1, indicates the device mode and configuration can be changed and a new start command will be accepted. When 0, indicates the device is busy</description>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+
+        <register>
+            <name>result_interrupt_status_gpio</name>
+            <description>RESULT_INTERRUPT_STATUS_GPIO</description>
+            <addressOffset>0x04f</addressOffset>
+            <size>8</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+            <fields>
+                <field>
+                    <name>error</name>
+                    <description>Interrupt bits for Error</description>
+                    <bitRange>[7:6]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>no</name>
+                            <description>No error reported</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>laser_safety</name>
+                            <description>Laser Safety Error</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>pll</name>
+                            <description>PLL error (either PLL1 or PLL2)</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>als</name>
+                    <description>Interrupt bits for ALS</description>
+                    <bitRange>[5:3]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>no</name>
+                            <description>No threshold events reported</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_low</name>
+                            <description>Level Low threshold event</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_high</name>
+                            <description>Level High threshold event</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>out_of_window</name>
+                            <description>Out Of Window threshold event</description>
+                            <value>3</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>new_sample_ready</name>
+                            <description>New Sample Ready threshold event</description>
+                            <value>4</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>range</name>
+                    <description>Interrupt bits for Range</description>
+                    <bitRange>[2:0]</bitRange>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>no</name>
+                            <description>No threshold events reported</description>
+                            <value>0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_low</name>
+                            <description>Level Low threshold event</description>
+                            <value>1</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>level_high</name>
+                            <description>Level High threshold event</description>
+                            <value>2</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>out_of_window</name>
+                            <description>Out Of Window threshold event</description>
+                            <value>3</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>new_sample_ready</name>
+                            <description>New Sample Ready threshold event</description>
+                            <value>4</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>result_als_val</name>
+            <description>16 Bit ALS count output value. Lux value depends on Gain and integration settings and calibrated lux/count setting</description>
+            <addressOffset>0x050</addressOffset>
+            <size>16</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_history_buffer%s</name>
+            <description>Range/ALS result value</description>
+            <addressOffset>0x052</addressOffset>
+            <size>16</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+            <dim>8</dim>
+            <dimIncrement>0x2</dimIncrement>
+            <dimIndex>0-7</dimIndex>
+            <fields>
+                <field>
+                    <name>range_newer</name>
+                    <bitRange>[15:8]</bitRange>
+                </field>
+                <field>
+                    <name>range_older</name>
+                    <bitRange>[7:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>result_range_val</name>
+            <description>Final range result value presented to the user for use. Unit is in mm</description>
+            <addressOffset>0x062</addressOffset>
+            <size>8</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_raw</name>
+            <description>Raw Range result value with offset applied (no cross-talk compensation applied). Unit is in mm</description>
+            <addressOffset>0x064</addressOffset>
+            <size>8</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_return_rate</name>
+            <description>Sensor count rate of signal returns correlated to IR emitter. Computed from RETURN_SIGNAL_COUNT / RETURN_CONV_TIME. Mcps 9.7 format</description>
+            <addressOffset>0x066</addressOffset>
+            <size>16</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_reference_rate</name>
+            <description>Sensor count rate of reference signal returns. Computed from REFERENCE_SIGNAL_COUNT / RETURN_CONV_TIME. Mcps 9.7 format</description>
+            <addressOffset>0x068</addressOffset>
+            <size>16</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_return_signal_count</name>
+            <description>Sensor count output value attributed to signal correlated to IR emitter on the Return array</description>
+            <addressOffset>0x06c</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_reference_signal_count</name>
+            <description>Sensor count output value attributed to signal correlated to IR emitter on the Reference array</description>
+            <addressOffset>0x070</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_return_amb_count</name>
+            <description>Sensor count output value attributed to uncorrelated ambient signal on the Return array. Must be multiplied by 6 if used to calculate the ambient to signal threshold</description>
+            <addressOffset>0x074</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_reference_amb_count</name>
+            <description>Sensor count output value attributed to uncorrelated ambient signal on the Reference array</description>
+            <addressOffset>0x078</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_return_conv_time</name>
+            <description>Sensor count output value attributed to signal on the Return array</description>
+            <addressOffset>0x07c</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+        <register>
+            <name>result_range_reference_conv_time</name>
+            <description>Sensor count output value attributed to signal on the Reference array</description>
+            <addressOffset>0x080</addressOffset>
+            <size>32</size>
+            <access>read-only</access>
+            <resetValue>0x0</resetValue>
+        </register>
+
+        <!-- READOUT -->
+        <register>
+            <name>readout_averaging_sample_period</name>
+            <description>The internal readout averaging sample period can be adjusted from 0 to 255. Increasing the sampling period decreases noise but also reduces the effective max convergence time and increases power consumption</description>
+            <addressOffset>0x10A</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x30</resetValue>
+        </register>
+
+        <!-- FIRMWARE -->
+        <register>
+            <name>firmware_bootup</name>
+            <description>FW must set bit once initial boot has been completed</description>
+            <addressOffset>0x119</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>value</name>
+                    <bitRange>[0:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+        <register>
+            <name>firmware_result_scaler</name>
+            <description>Analogue gain 1 to 16x</description>
+            <addressOffset>0x120</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x1</resetValue>
+            <fields>
+                <field>
+                    <name>als</name>
+                    <bitRange>[3:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+
+        <!-- I2C_SLAVE -->
+        <register>
+            <name>i2c_slave_device_address</name>
+            <description>User programmable I 2 C address (7-bit). Device address can be re-designated after power-up</description>
+            <addressOffset>0x212</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x29</resetValue>
+            <fields>
+                <field>
+                    <name>super_address</name>
+                    <bitRange>[7:0]</bitRange>
+                </field>
+            </fields>
+        </register>
+
+        <!-- INTERLEAVED_MODE -->
+        <register>
+            <name>interleaved_mode_enable</name>
+            <description>Write 0x1 to this register to select ALS+Range interleaved mode. Use SYSALS_START and SYSALS_INTERMEASUREMENT_PERIOD to control this mode. A range measurement is automatically performed immediately after each ALS measurement</description>
+            <addressOffset>0x2a3</addressOffset>
+            <size>8</size>
+            <access>read-write</access>
+            <resetValue>0x0</resetValue>
+        </register>
+
+
+
+
+
+            </registers>
+        </peripheral>
+    </peripherals>
+</device>
